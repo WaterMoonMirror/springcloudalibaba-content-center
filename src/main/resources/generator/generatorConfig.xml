@@ -1,0 +1,46 @@
+<!DOCTYPE generatorConfiguration
+    PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+    "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <properties resource="generator/config.properties"/>
+
+    <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+            <property name="caseSensitive" value="true"/>
+            <!--lombok 增加 model 代码生成时，可以直接生成 lombok 的
+             @Getter@Setter@ToString@Accessors(chain = true) 四类注解，
+             使用者在插件配置项中增加 <property name="lombok" value="Getter,Setter,ToString,Accessors"/>
+             即可生成对应包含注解的 model 类。-->
+            <property name="lombok" value="Getter,Setter,ToString,Accessors"/>
+        </plugin>
+
+        <jdbcConnection driverClass="${jdbc.driverClass}"
+                        connectionURL="${jdbc.url}"
+                        userId="${jdbc.user}"
+                        password="${jdbc.password}">
+        </jdbcConnection>
+
+        <!--实体-->
+        <javaModelGenerator targetPackage="com.wondersgroup.lz.contentcenter.domain.entity.${moduleName}"
+                            targetProject="src/main/java"/>
+
+        <!--mapper.xml-->
+        <sqlMapGenerator targetPackage="com.wondersgroup.lz.contentcenter.dao.${moduleName}"
+                         targetProject="src/main/resources"/>
+
+        <!--mapper接口-->
+        <javaClientGenerator targetPackage="com.wondersgroup.lz.contentcenter.dao.${moduleName}"
+                             targetProject="src/main/java"
+                             type="XMLMAPPER"/>
+
+        <!--为哪张表生成代码-->
+        <table tableName="${tableName}">
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
+    </context>
+</generatorConfiguration>
