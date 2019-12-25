@@ -7,6 +7,13 @@ spring:
       # >= 6.x: com.mysql.cj.jdbc.Driver
       # <= 5.x: com.mysql.jdbc.Driver
       driver-class-name: com.mysql.cj.jdbc.Driver
-
+  cloud:
+    #    nacos配置地址
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    #        服务名称
+    application:
+      name: content-centos
 server:
   port: 8090
