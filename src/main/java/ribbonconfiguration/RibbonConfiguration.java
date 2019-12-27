@@ -2,6 +2,8 @@ package ribbonconfiguration;
 
 import com.netflix.loadbalancer.IRule;
 import com.netflix.loadbalancer.RandomRule;
+import com.wondersgroup.lz.contentcenter.configuration.NacosWeightedRule;
+import com.wondersgroup.lz.contentcenter.configuration.UserCenterRibbonConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,6 +12,6 @@ import org.springframework.context.annotation.Configuration;
 public class RibbonConfiguration {
     @Bean
     public IRule rubbonRule(){
-        return new RandomRule();
+        return new NacosWeightedRule();
     }
 }
