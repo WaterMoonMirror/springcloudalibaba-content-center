@@ -24,14 +24,14 @@ public class ShareService {
 
         // 获取分享详情
         var share = shareMapper.selectByPrimaryKey(id);
-        // 使用discoveryClient 获取动态地址
-        var ins = discoveryClient.getInstances("user-centos");
+       /* // 使用discoveryClient 获取动态地址
+        var ins = discoveryClient.getInstances("user-center");
         var targUrl = ins.stream().map(r -> r.getUri().toString() + "/users/{id}")
                 .findFirst()
                 .orElseThrow(()->new RuntimeException("没有发现当前实例"));
-        log.info("目标地址为{}",targUrl);
+        log.info("目标地址为{}",targUrl);*/
         // 获取用户信息
-        var user = restTemplate.getForObject(targUrl,
+        var user = restTemplate.getForObject("http://user-center/users/{id}",
                 UserDTO.class, id);
         var shareDTO = new ShareDTO();
         // 消息的装配

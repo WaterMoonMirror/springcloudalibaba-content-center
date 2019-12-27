@@ -8,12 +8,23 @@ spring:
       # <= 5.x: com.mysql.jdbc.Driver
       driver-class-name: com.mysql.cj.jdbc.Driver
   cloud:
-    #    nacos配置地址
     nacos:
       discovery:
         server-addr: localhost:8848
-    #        服务名称
-    application:
-      name: content-centos
+  application:
+    name: conetnt-center
+
+
 server:
   port: 8090
+
+#细粒度配置-配置属性方式
+#user-center:
+#  ribbon:
+#    NFLoadBaLancerRuleclassName: com.netflix.loadbalancer.RandomRule
+
+# 开启饥饿加载
+ribbon:
+  eager-load:
+    clients: user-center
+    enabled: true
