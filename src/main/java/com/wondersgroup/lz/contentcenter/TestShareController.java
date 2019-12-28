@@ -1,7 +1,10 @@
 package com.wondersgroup.lz.contentcenter;
 
 import com.wondersgroup.lz.contentcenter.dao.share.ShareMapper;
+import com.wondersgroup.lz.contentcenter.domain.dto.user.UserDTO;
 import com.wondersgroup.lz.contentcenter.domain.entity.share.Share;
+import com.wondersgroup.lz.contentcenter.feignclient.TestBaiduFeiginClient;
+import com.wondersgroup.lz.contentcenter.feignclient.UserCenterFeignClient;
 import lombok.RequiredArgsConstructor;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +43,20 @@ public class TestShareController {
     public List<ServiceInstance> test2(){
         var instances = discoveryClient.getInstances("user-centos");
         return instances;
+    }
+
+    @Autowired
+    UserCenterFeignClient userCenterFeignClient;
+    @GetMapping("q")
+    public UserDTO qy(UserDTO userDTO){
+        return userCenterFeignClient.query(userDTO);
+    }
+
+    @Autowired
+    TestBaiduFeiginClient testBaiduFeiginClient;
+    @GetMapping("baidu")
+    public String baidu(){
+        return testBaiduFeiginClient.index();
     }
 
 }

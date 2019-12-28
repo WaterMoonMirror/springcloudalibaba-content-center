@@ -2,7 +2,7 @@ package com.wondersgroup.lz.contentcenter.service.share;
 
 import com.wondersgroup.lz.contentcenter.dao.share.ShareMapper;
 import com.wondersgroup.lz.contentcenter.domain.dto.conten.ShareDTO;
-import com.wondersgroup.lz.contentcenter.domain.dto.user.UserDTO;
+import com.wondersgroup.lz.contentcenter.feignclient.UserCenterFeignClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
@@ -20,6 +20,7 @@ public class ShareService {
     final ShareMapper shareMapper;
     final RestTemplate restTemplate;
     final DiscoveryClient discoveryClient;
+    final UserCenterFeignClient userCenterFeignClient;
     public ShareDTO getShareById(Integer id) {
 
         // 获取分享详情
@@ -31,8 +32,9 @@ public class ShareService {
                 .orElseThrow(()->new RuntimeException("没有发现当前实例"));
         log.info("目标地址为{}",targUrl);*/
         // 获取用户信息
-        var user = restTemplate.getForObject("http://user-center/users/{id}",
-                UserDTO.class, id);
+        /*var user = restTemplate.getForObject("http://user-center/users/{id}",
+                UserDTO.class, id);*/
+        var user = userCenterFeignClient.findById(id);
         var shareDTO = new ShareDTO();
         // 消息的装配
         BeanUtils.copyProperties(share,shareDTO);

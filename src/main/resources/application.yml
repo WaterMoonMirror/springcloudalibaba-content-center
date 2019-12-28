@@ -24,7 +24,30 @@ server:
 #    NFLoadBaLancerRuleclassName: com.netflix.loadbalancer.RandomRule
 
 # 开启饥饿加载
-ribbon:
-  eager-load:
-    clients: user-center
+#ribbon:
+#  eager-load:
+#    clients: user-center
+#    enabled: true
+# 开启日志级别
+logging:
+  level:
+    com.wondersgroup.lz.contentcenter.feignclient.UserCenterFeignClient: debug
+#    feign的属性配置
+feign:
+  client:
+    config:
+#      想要调用的微服务的名称
+#      user-center:
+#      全局配置
+      default:
+        # feing 属性日志级别配置
+        loggerLevel: full
+# feign性能优化 ： 配置httpclient线程池
+  httpclient:
+    #  让feign使用Apache的httpclient做请求，而不是使用默认的urlclient
     enabled: true
+#    fegin 的最大连接数
+    max-connections: 200
+#    fegin单个路径的最大连接数
+    max-connections-per-route: 50
+
